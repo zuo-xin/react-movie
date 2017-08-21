@@ -40,7 +40,38 @@ module.exports = {
 						}
 					]
 				})
+			},{
+				test:/\.(png|gif|jpg|jpeg|bmp)$/i,
+				use:[
+					{
+						loader:"url-loader",
+						options:{
+							limit:8192
+						}
+					}
+				]
 			}
 		]
+	},
+	plugins:[
+		new HtmlWebpackPlugin({
+			template:__dirname+'/src/index.tmpl.html'
+		}),
+		new webpack.HotModuleReplacementPlugin(),
+		new ExtraTextPlugin("style.css"),
+		new CleanWebpackPlugin(['dist'])
+	],
+	devtool:"inline-source-map",
+	devServer:{
+		inline:true,
+		hot:true,
+		port:8999,
+		proxy:{
+			'/v4/api/*':{
+				target:"http://m.maizuo.com/",
+				host:"m.maizuo.com",
+				changeOrigin:true
+			}
+		}
 	}
 }
