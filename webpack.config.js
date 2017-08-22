@@ -44,13 +44,20 @@ module.exports = {
 				test:/\.(png|gif|jpg|jpeg|bmp)$/i,
 				use:[
 					{
-						loader:"url-loader",
+						loader:"file-loader"
+					}
+				]
+			},{
+                test: /\.(eot|svg|ttf|woff|woff2)$/,
+				use:[
+					{
+						loader:'file-loader',
 						options:{
-							limit:8192
+							name: 'fonts/[name].[ext]?[hash]'
 						}
 					}
 				]
-			}
+            }
 		]
 	},
 	plugins:[
